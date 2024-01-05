@@ -2,6 +2,7 @@ package org.leetcode.valid_parenthesis;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
@@ -10,26 +11,27 @@ import java.util.concurrent.Future;
 public class Solution {
   public boolean isValid(String s) {
     char[] c = s.toCharArray();
-    boolean valid = true;
     Map<Character, Character> map = new HashMap<>();
+    Stack<Character> stack = new Stack<>();
     map.put('(', ')');
     map.put('{', '}');
     map.put('[', ']');
 
-    for (int i = 0; i <= c.length; i++) {
-      if (i >= c.length - 1) {
-        break;
+    for (int i = 0; i < s.length(); i++) {
+      if (map.containsKey(c[i])) {
+        stack.push(c[i]);
+      } else {
+        if (stack.empty()) {
+          return false;
+        }
+        char pop = stack.pop();
+        if (!map.containsKey(pop) || map.get(pop) != c[i]) {
+          return false;
+        }
       }
-      if (!map.get(c[i]).equals(c[i + 1])) {
-        valid = false;
-      }
-      i++;
-      if (!valid) {
-        break;
-      }
-    }
 
-    return valid;
+    }
+    return stack.empty();
   }
 
   public Future<String> calculateAsync() throws InterruptedException {
@@ -51,10 +53,6 @@ public class Solution {
   public static void main(String[] args) throws InterruptedException, ExecutionException {
     Solution solution = new Solution();
 
-    Future<String> completableFuture = solution.calculateAsync();
-
-    String result = completableFuture.get();
-    System.out.print(result);
-    System.out.println(solution.isValid("([)]"));
+    System.out.println(solution.isValid("()"));
   }
 }

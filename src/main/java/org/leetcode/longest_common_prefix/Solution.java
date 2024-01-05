@@ -1,10 +1,12 @@
 package org.leetcode.longest_common_prefix;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 class Solution {
   public String longestCommonPrefix(String[] strs) {
     StringBuilder sb = new StringBuilder();
+    Stack<Character> stack;
     int len = strs.length;
 
     if (len == 0) {
