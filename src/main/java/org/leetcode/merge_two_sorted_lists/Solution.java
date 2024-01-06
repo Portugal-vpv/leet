@@ -10,23 +10,23 @@ class Solution {
         if (!Objects.isNull(list1) && Objects.isNull(list2)) {
             int val = list1.val;
             list1 = list1.next;
-            mergedList.next = new ListNode(val, list1);
+            mergedList.next = new ListNode(val, new ListNode());
         }
 
         if (Objects.isNull(list1) && !Objects.isNull(list2)) {
             int val = list2.val;
             list2 = list2.next;
-            mergedList.next = new ListNode(val, list2);
+            mergedList.next = new ListNode(val);
         }
 
         if (list1.val > list2.val) {
             int val = list1.val;
             list1 = list1.next;
-            mergedList.next = new ListNode(val,list1);
+            mergedList.next = new ListNode(val);
         } else {
             int val = list2.val;
             list2 = list2.next;
-            mergedList.next = new ListNode(val,list2);
+            mergedList.next = new ListNode(val);
         }
     } while(!Objects.isNull(list1) && !Objects.isNull(list2));
 
@@ -70,6 +70,7 @@ class Solution {
 
     Solution s = new Solution();
     ListNode result = s.mergeTwoLists(l, l1);
+
     do {
       System.out.println(result.val);
     } while (!Objects.isNull(result.next));
